@@ -5,19 +5,6 @@ networks:
     driver: bridge
 
 services:
-  db:
-    image: postgres
-    container_name: insta-training-db
-    environment:
-      - POSTGRES_PASSWORD=insta-training
-    ports:
-      - 4200:5432
-    volumes:
-      - insta-training-volume:/var/lib/postgresql/data
-    networks:
-      - insta-training-network
-    restart: always
-
   api:
     container_name: insta-training-api-container
     build:
@@ -34,6 +21,20 @@ services:
     depends_on:
       - db
     restart: always
+
+  db:
+    image: postgres
+    # container_name: insta-training-db
+    environment:
+      - POSTGRES_PASSWORD=insta-training
+    ports:
+      - :5432
+    volumes:
+      - insta-training-volume:/var/lib/postgresql/data
+    networks:
+      - insta-training-network
+    restart: always
+
 
 volumes:
   insta-training-volume:

@@ -11,6 +11,7 @@ interface ChatMessage {
   isLoading?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ApiResponse {
   data: {
     id: string;
@@ -132,6 +133,7 @@ export default function ChatPage() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       handleSubmit(e as any);
     }
   };

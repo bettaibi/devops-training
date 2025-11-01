@@ -1,0 +1,33 @@
+name: devops-training
+
+networks:
+  devops-training-network:
+    driver: bridge
+
+services:
+  core:
+    container_name: devops-training-core
+    build:
+      context: ./components/core
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+    networks:
+      - devops-training-network
+
+  web:
+    container_name: devops-training-web
+    build:
+      context: ./components/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - devops-training-network
+    depends_on:
+      - core
