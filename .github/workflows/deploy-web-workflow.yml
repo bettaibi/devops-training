@@ -1,21 +1,44 @@
 name: Deploy Web component
-on: 
-    push:
-        branches: [ test-workflows ]
+on:
+  push:
+    branches: [test-workflows]
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./components/web
-        steps:
-            - name: checkout repo
-              uses: actions/checkout@v4
-            - name: setup node
-              uses: actions/setup-node@v6
-              with:
-                node-version: 22
-            - name: install dependencies
-              run: npm ci
-            - name: run build
-              run: npm run build
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./components/web
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: install dependencies
+        run: npm ci
+      - name: run build
+        run: npm run build
+      - name: upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: components/web/.next
+          retention-days: 1
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./components/web
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: install dependencies
+        run: npm ci
+      - name: run tests
+        run: npm test
