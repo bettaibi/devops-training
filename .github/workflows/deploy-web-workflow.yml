@@ -1,0 +1,21 @@
+name: Deploy Web component
+on: 
+    push:
+        branches: [ test-workflows ]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./components/web
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v4
+            - name: setup node
+              uses: actions/setup-node@v6
+              with:
+                node-version: 22
+            - name: install dependencies
+              run: npm ci
+            - name: run build
+              run: npm run build
