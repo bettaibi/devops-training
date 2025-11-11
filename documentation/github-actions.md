@@ -85,7 +85,6 @@ A job is a set of steps that execute on the same runner. Jobs run in parallel by
 
 **Characteristics:**
 - Run in parallel by default
-- Execute on the same runner instance
 - Can have dependencies on other jobs
 - Can run on different operating systems (Ubuntu, Windows, macOS)
 
@@ -202,8 +201,6 @@ jobs:                    # Collection of jobs
 
 ### Example 1: CI Workflow for Node.js Application
 
-For a Node.js/TypeScript project with multiple components (api, core, web):
-
 ```yaml
 name: CI
 
@@ -230,8 +227,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: components/api/package-lock.json
       
       - name: Install dependencies
         run: npm ci
