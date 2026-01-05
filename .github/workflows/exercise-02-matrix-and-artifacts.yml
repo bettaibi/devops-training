@@ -95,7 +95,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: components/web/.next
+          path: ${{ github.workspace }}/components/web/.next/
+          include-hidden-files: true  # Explicitly tell it to include .next
   # TODO: Create 'deploy' job that downloads and uses the artifact
   deploy:
     needs: [build]
