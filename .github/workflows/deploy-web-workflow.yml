@@ -1,7 +1,6 @@
 name: Deploy Web component
 on:
-  push:
-    branches: [test-workflows]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest

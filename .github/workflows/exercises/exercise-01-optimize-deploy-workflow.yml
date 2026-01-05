@@ -16,9 +16,10 @@
 # ====================
 
 name: Deploy Web component (Exercise 1)
+# NOTE: Using workflow_dispatch to prevent auto-running when pushing
+# To test: Go to Actions tab → Select this workflow → "Run workflow"
 on:
-  push:
-    branches: [test-workflows]
+  workflow_dispatch:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest

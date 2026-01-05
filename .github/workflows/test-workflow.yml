@@ -1,8 +1,6 @@
 name: Workflow to print a message
 on:
-  push:
-    paths:
-      - "components/web/**"
+  workflow_dispatch:
 jobs:
   printer-job:
     runs-on: ubuntu-latest

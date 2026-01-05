@@ -79,16 +79,23 @@ jobs:
         run: npm run build
       - name: Debug - List files after build
         run: |
+          echo "Current working directory:"
+          pwd
           echo "Files in current directory:"
           ls -la
           echo "Checking for .next folder:"
           ls -la .next || echo ".next folder not found"
+          echo "From repo root, checking components/web/.next:"
+          cd ${{ github.workspace }}
+          ls -la components/web/.next 2>/dev/null || echo "Path not found from workspace root"
+          echo "Verifying .next exists:"
+          test -d components/web/.next && echo "✓ .next directory exists" || echo "✗ .next directory NOT found"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: ./components/web/.next
+          path: components/web/.next
   # TODO: Create 'deploy' job that downloads and uses the artifact
   deploy:
     needs: [build]

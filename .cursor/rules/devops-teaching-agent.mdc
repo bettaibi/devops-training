@@ -205,3 +205,26 @@ This training uses a real microservices project with:
 - components/web - Next.js frontend application
 
 All exercises should integrate with this actual project structure when possible.
+
+### Workflow Trigger Management
+
+For GitHub Actions exercises:
+
+- **Active exercises** (currently being worked on) should use `push:` trigger on `test-workflows` branch for automatic testing
+- **Completed exercises** should be switched to `workflow_dispatch:` (manual trigger) to prevent auto-running when pushing code
+- When moving to a new exercise, update the previous exercise's trigger from `push:` to `workflow_dispatch:`
+- This prevents multiple workflows from running simultaneously and keeps the Actions dashboard clean
+
+**Pattern:**
+```yaml
+# Active exercise (auto-runs on push)
+on:
+  push:
+    branches: [test-workflows]
+
+# Completed exercise (manual trigger only)
+on:
+  workflow_dispatch:
+```
+
+**Note:** Exercise files in `.github/workflows/exercises/` subfolder won't run automatically (GitHub only recognizes workflows in `.github/workflows/` root). To test, temporarily copy to root or use `workflow_dispatch`.
