@@ -77,6 +77,13 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Debug - List files after build
+        run: |
+          echo "Files in current directory:"
+          ls -la
+          echo "Checking for .next folder:"
+          ls -la .next || echo ".next folder not found"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
