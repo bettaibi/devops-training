@@ -25,4 +25,5 @@ jobs:
     with:
       working_directory: "./components/web"
       artifact_name: "web-production-bundle"
+    secrets:
       DEPLOY_TOKEN: 'dummy-token'
