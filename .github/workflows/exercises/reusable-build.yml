@@ -32,7 +32,7 @@ on:
         type: string
       artifact_name:
         type: string
-        default: build-output
+        default: 'build-output'
 
     # TODO: Define secrets here
     secrets:
@@ -52,6 +52,7 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+          cache-dependency-path: ./components/web/package-lock.json
 
       - name: Install
         run: npm ci
@@ -68,4 +69,5 @@ jobs:
           include-hidden-files: true
 
       - name: Deployment
-        run: echo "Building with token: ${{ secrets.DEPLOY_TOKEN }}"
+        run: |
+          echo "Building with token: ${{ secrets.DEPLOY_TOKEN }}"

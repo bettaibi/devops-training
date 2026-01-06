@@ -21,8 +21,9 @@ on:
 
 jobs:
   call-build:
-    uses: ./.github/workflows/exercises/reusable-build.yml
+    uses: ./.github/workflows/reusable-build.yml
     with:
       working_directory: "./components/web"
       artifact_name: "web-production-bundle"
+    secrets:
       DEPLOY_TOKEN: 'dummy-token'
