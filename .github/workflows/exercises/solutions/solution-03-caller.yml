@@ -11,11 +11,6 @@
 #    - artifact_name: 'web-production-bundle'
 # 5. Pass the secret 'DEPLOY_TOKEN' (you can just pass any string like 'dummy-token' for now)
 #
-# HINTS:
-# - Call reusable workflow: uses: ./.github/workflows/exercises/reusable-build.yml
-# - Pass inputs with 'with:' keyword
-# - Pass secrets with 'secrets:' keyword
-#
 # YOUR SOLUTION BELOW:
 # ====================
 
@@ -25,4 +20,10 @@ on:
     branches: [test-workflows]
 
 jobs:
-  # TODO: Call your reusable workflow here
+  call-build:
+    uses: ./.github/workflows/exercises/reusable-build.yml
+    with:
+      working_directory: "./components/web"
+      artifact_name: "web-production-bundle"
+    secrets:
+      DEPLOY_TOKEN: 'dummy-token'

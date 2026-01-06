@@ -19,6 +19,12 @@
 #    - Uploads the '.next' folder (using the 'artifact_name' input)
 #    - Echoes "Building with token: ${{ secrets.DEPLOY_TOKEN }}" (Simulating usage)
 #
+# HINTS:
+# - workflow_call inputs syntax: inputs.input_name (type, required, default)
+# - Use ${{ inputs.working_directory }} to reference inputs
+# - Use ${{ secrets.DEPLOY_TOKEN }} to reference secrets
+# - For artifact path, use: ${{ github.workspace }}/${{ inputs.working_directory }}/.next/
+#
 # YOUR SOLUTION BELOW:
 # ====================
 
@@ -26,48 +32,34 @@ name: Reusable Build Template
 on:
   workflow_call:
     # TODO: Define inputs here
-    inputs:
-      working_directory:
-        required: true
-        type: string
-      artifact_name:
-        type: string
-        default: 'build-output'
-
+    
     # TODO: Define secrets here
-    secrets:
-      DEPLOY_TOKEN:
-        required: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     # TODO: Set defaults using the input
-    defaults:
-      run:
-        working-directory: ${{ inputs.working_directory }}
-
+    
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
-          cache-dependency-path: ./components/web/package-lock.json
-
+          cache: 'npm'
+      
       - name: Install
         run: npm ci
-
+        
       - name: Build
         run: npm run build
-
+        
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
           # TODO: Use the artifact_name input here
-          name: ${{ inputs.artifact_name }}
-          path: ${{ inputs.working_directory }}/.next/
+          name: build-output # placeholder
+          path: .next/ # placeholder - you'll need to fix this
           include-hidden-files: true
-
+          
       - name: Deployment
-        run: |
-          echo "Building with token: ${{ secrets.DEPLOY_TOKEN }}"
+        run: echo "Building with token: [TODO: use secret here]"

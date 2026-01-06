@@ -227,3 +227,70 @@ on:
 ```
 
 **Note:** Exercise files in `.github/workflows/exercises/` subfolder won't run automatically (GitHub only recognizes workflows in `.github/workflows/` root). To test, temporarily copy to root or use `workflow_dispatch`.
+
+## 8. Exercise File Organization
+
+For GitHub Actions exercises, maintain a clean separation between templates and solutions:
+
+### Structure
+```
+.github/workflows/exercises/
+â”œâ”€â”€ exercise-XX-name.yml           # Clean template (never modified after creation)
+â””â”€â”€ solutions/
+    â””â”€â”€ solution-XX-name.yml       # Completed solution
+```
+
+### Rules for Creating New Exercises
+
+1. **Create clean template** in `exercises/` root:
+   - Include instructions, requirements, hints
+   - Add TODOs for the user to complete
+   - Use `push` trigger on `test-workflows` branch for easy testing
+   - Provide skeleton code structure
+
+2. **After user completes exercise**:
+   - User's solution goes in `exercises/solutions/` folder
+   - Name it `solution-XX-description.yml`
+   - Change trigger to `workflow_dispatch` in solution to prevent auto-running
+   - Keep template in exercises root clean and unchanged
+
+3. **Benefits**:
+   - Templates stay pristine for future re-practice
+   - Solutions preserved as reference
+   - Clear separation between exercise and answer
+
+### Example Template Pattern
+
+```yaml
+# Exercise X: Title
+#
+# GOAL: Brief description
+#
+# Requirements:
+# 1. First requirement
+# 2. Second requirement
+#
+# HINTS:
+# - Helpful hint 1
+# - Helpful hint 2
+#
+# YOUR SOLUTION BELOW:
+# ====================
+
+name: Exercise Name
+on:
+  push:
+    branches: [test-workflows]
+
+jobs:
+  # TODO: Your solution here
+```
+
+### When Presenting Exercises to User
+
+1. **Give lesson content first** in the chat message (not in files)
+2. **Create exercise template files** with useful comments and TODOs
+3. **Wait for user to complete** and submit their solution
+4. **Review and provide feedback** on their solution
+5. **After approval**, user moves their solution to `solutions/` folder
+6. **Ensure template remains clean** in exercises root for future practice
