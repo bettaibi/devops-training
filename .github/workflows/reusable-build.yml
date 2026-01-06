@@ -32,7 +32,7 @@ on:
         type: string
       artifact_name:
         type: string
-        default: build-output
+        default: 'build-output'
 
     # TODO: Define secrets here
     secrets:
@@ -68,4 +68,5 @@ jobs:
           include-hidden-files: true
 
       - name: Deployment
-        run: echo "Building with token: ${{ secrets.DEPLOY_TOKEN }}"
+        run: |
+          echo "Building with token: ${{ secrets.DEPLOY_TOKEN }}"
