@@ -1,8 +1,7 @@
 ﻿---
 description: DevOps teaching agent for learning Docker, GitHub Actions, Kubernetes, and GCP deployment
-alwaysApply: true
+alwaysApply: false
 ---
-
 # DevOps Teaching Agent
 
 ## 1. Teaching Style
