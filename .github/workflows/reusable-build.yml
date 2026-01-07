@@ -1,0 +1,73 @@
+# Exercise 3: Reusable Build Template
+#
+# GOAL: This is a TEMPLATE workflow that can be called by others.
+#
+# Requirements:
+# 1. Use the 'workflow_call' trigger
+# 2. Accept two inputs:
+#    - 'working_directory' (string, required)
+#    - 'artifact_name' (string, default: 'build-output')
+# 3. Accept one secret:
+#    - 'DEPLOY_TOKEN' (required)
+#
+# 4. Create a single job named 'build' that:
+#    - Uses the input 'working_directory' for its defaults
+#    - Checks out code
+#    - Sets up Node 22
+#    - Installs dependencies (npm ci)
+#    - Builds the project (npm run build)
+#    - Uploads the '.next' folder (using the 'artifact_name' input)
+#    - Echoes "Building with token: ${{ secrets.DEPLOY_TOKEN }}" (Simulating usage)
+#
+# YOUR SOLUTION BELOW:
+# ====================
+
+name: Reusable Build Template
+on:
+  workflow_call:
+    # TODO: Define inputs here
+    inputs:
+      working_directory:
+        required: true
+        type: string
+      artifact_name:
+        type: string
+        default: 'build-output'
+
+    # TODO: Define secrets here
+    secrets:
+      DEPLOY_TOKEN:
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # TODO: Set defaults using the input
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: ./components/web/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          # TODO: Use the artifact_name input here
+          name: ${{ inputs.artifact_name }}
+          path: ${{ github.workspace }}/${{ inputs.working_directory }}/.next/
+          include-hidden-files: true
+
+      - name: Deployment
+        run: |
+          echo "Building with token: ${{ secrets.DEPLOY_TOKEN }}"

@@ -1,0 +1,27 @@
+# Exercise 1: Optimize Deploy Workflow
+#
+# GOAL: Fix and optimize the deploy-web-workflow.yml
+#
+# Requirements:
+# 1. Use the correct version of actions/setup-node (v4, not v6)
+# 2. Combine 'build' and 'test' into a single 'ci' job that:
+#    - Runs tests first (npm test)
+#    - Then builds (npm run build)
+# 3. Add npm caching using the built-in cache feature
+# 4. Keep the 'deploy' job dependent on the new 'ci' job
+#
+# Reference: ../../deploy-web-workflow.yml (original file)
+#
+# YOUR SOLUTION BELOW:
+# ====================
+
+name: Deploy Web component (Exercise 1)
+on:
+  push:
+    branches: [test-workflows]
+
+# TODO: Create 'ci' job that combines build and test
+jobs:
+  # TODO: Your solution here
+
+  # TODO: Create 'deploy' job that depends on 'ci'

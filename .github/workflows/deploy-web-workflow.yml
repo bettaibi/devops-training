@@ -1,0 +1,42 @@
+name: Deploy Web component
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./components/web
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: install dependencies
+        run: npm ci
+      - name: run build
+        run: npm run build
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./components/web
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: install dependencies
+        run: npm ci
+      - name: run build
+        run: npm run build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    steps:
+      - name: deploy
+        run: echo "Deploying..."
