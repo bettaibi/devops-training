@@ -31,6 +31,8 @@ jobs:
   test-composite-action:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v4
       - name: Setup Node Project
         id: setup-node-project
         uses: ./.github/actions/setup-node-project
