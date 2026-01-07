@@ -66,3 +66,4 @@ runs:
     - name: install dependencies
       shell: bash
       run: npm ci
+      working-directory: ${{ inputs.working-directory }}
