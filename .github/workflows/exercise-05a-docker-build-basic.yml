@@ -82,6 +82,6 @@ jobs:
           context: "./components/web"
           file: "./components/web/Dockerfile"
           push: true
-          tags: ghcr.io/${{ env.$OWNER_LC }}/devops-raining:${{ github.ref_name }}
+          tags: ghcr.io/${{ env.OWNER_LC }}/devops-raining:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
