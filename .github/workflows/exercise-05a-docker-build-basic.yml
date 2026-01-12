@@ -48,7 +48,7 @@
 # YOUR SOLUTION BELOW:
 # ====================
 
-name: "Exercise 5A: Basic Docker Build"
+name: Exercise 5A - Basic Docker Build
 
 on:
   push:
