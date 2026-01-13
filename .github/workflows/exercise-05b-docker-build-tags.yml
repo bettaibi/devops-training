@@ -115,7 +115,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha,prefix=sha-
-            type=raw,value=latest
+            type=raw,value=latest,priority=200
       - name: Build and push with tags/labels
         uses: docker/build-push-action@v6
         with:
