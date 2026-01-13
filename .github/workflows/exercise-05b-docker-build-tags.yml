@@ -83,7 +83,7 @@ name: Exercise 5B - Advanced Tagging
 
 on:
   push:
-    branches: [test-workflows ]
+    branches: [test-workflows]
 
 jobs:
   build-and-push-web:
