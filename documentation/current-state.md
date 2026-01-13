@@ -1,8 +1,8 @@
 # Current State - DevOps Training
 
-**Date:** January 7, 2026  
-**Student:** s.mabrouk  
-**Current Task:** Exercise 5 - Build and Push Docker Images to GHCR
+**Date:** January 12, 2026
+**Student:** s.mabrouk
+**Current Task:** Exercise 5A - Basic Docker Build & Push to GHCR
 
 ---
 
@@ -15,15 +15,16 @@
    - Solution moved to: `.github/workflows/exercises/solutions/solution-04-composite-action.yml`
    - Trigger changed to `workflow_dispatch` to prevent auto-running
 
-2. 📝 Started Exercise 5: Build and Push Docker Images
-   - **Lesson delivered:** Docker + GitHub Actions integration, GHCR usage
-   - **Template created:** `.github/workflows/exercises/exercise-05-docker-build-push.yml`
-   - **Student status:** Working on the exercise
+2. 📝 Exercise 5 Restructured (Multi-Exercise Approach)
+   - **Theory delivered:** Comprehensive Docker + GitHub Actions integration (5-10 paragraphs)
+   - **Template created:** `.github/workflows/exercises/exercise-05a-docker-build-basic.yml`
+   - **Student status:** Starting Exercise 5A (Basic Build & Push)
+   - **Production patterns guide created:** `documentation/production-patterns-guide.md` (extracted from `/reference` folder)
 
-3. 🔄 **Migration in progress:** Student is migrating from regular Claude to Claude Code
-   - Need to preserve learning context
-   - Continue with same teaching style
-   - Resume from Exercise 5
+3. ✅ **Successfully migrated to Claude Code**
+   - Learning context preserved and enriched
+   - Reference materials analyzed (production workflows, Helm charts, compose files)
+   - Updated teaching approach implemented
 
 ---
 
@@ -33,33 +34,42 @@
 
 **IMPORTANT:** This topic requires 2-4 exercises for thorough learning (per updated teaching approach).
 
-**Current State:** Single exercise exists, needs to be expanded into multiple exercises.
+**Current State:** Multi-exercise structure implemented. Exercise 5A ready for student.
 
-**Recommended Structure:**
+**Exercise Structure:**
 
-**Exercise 5A: Basic Docker Build & Push (Foundation)**
+**Exercise 5A: Basic Docker Build & Push (Foundation)** ✅
 - **File:** `.github/workflows/exercises/exercise-05a-docker-build-basic.yml`
-- **Goals:** Build single service (web), push to GHCR with basic tag
-- **Concepts:** Buildx setup, GHCR authentication, basic build-push
-- **Status:** 🔄 Needs to be created
+- **Goals:** Build single service (web), push to GHCR with basic tag (branch name)
+- **Concepts:** Buildx setup, GHCR authentication, basic build-push, GHA caching
+- **Status:** ✅ **CREATED - Student ready to start**
+- **Requirements:**
+  - Trigger on push to `test-workflows` branch
+  - Job: `build-and-push-web`
+  - Permissions: `contents: read`, `packages: write`
+  - Steps: checkout, setup buildx, login to GHCR, build and push
+  - Tag: `ghcr.io/<username>/devops-web:<branch-name>`
+  - Enable GitHub Actions cache (type=gha)
 
-**Exercise 5B: Tagging Strategies (Reinforcement)**
+**Exercise 5B: Tagging Strategies (Reinforcement)** ⏳
 - **File:** `.github/workflows/exercises/exercise-05b-docker-build-tags.yml`
 - **Goals:** Implement multiple tagging strategies (branch, SHA, semantic)
-- **Concepts:** Metadata action, tag templates, latest tag
-- **Status:** 🔄 Needs to be created
+- **Concepts:** Metadata action, tag templates, OCI labels, tag priority
+- **Status:** ⏳ **PENDING - Create after 5A completion**
 
-**Exercise 5C: Multi-Service Builds (Integration)**
+**Exercise 5C: Multi-Service Builds (Integration)** ⏳
 - **File:** `.github/workflows/exercises/exercise-05c-docker-multi-service.yml`
 - **Goals:** Build all three services (web, api, core) in parallel
-- **Concepts:** Matrix or separate jobs, path filters, parallel execution
-- **Status:** 🔄 Needs to be created
+- **Concepts:** Separate parallel jobs, path filters, dependency orchestration
+- **Status:** ⏳ **PENDING - Create after 5B completion**
+- **Note:** Will follow production pattern (see `reference/workflows/reusable-deploy.yaml`)
 
-**Exercise 5D: Optimized Builds (Challenge - Optional)**
-- **File:** `.github/workflows/exercises/exercise-05d-docker-optimized.yml`
-- **Goals:** Advanced caching, multi-platform builds, build optimization
-- **Concepts:** Layer caching, cache modes, build arguments, conditional builds
-- **Status:** 🔄 Needs to be created
+**Exercise 5D: Production Patterns (Challenge)** ⏳
+- **File:** `.github/workflows/exercises/exercise-05d-docker-production.yml`
+- **Goals:** Implement production patterns
+- **Concepts:** Build args for versioning, build secrets, conditional builds, reusable workflows
+- **Status:** ⏳ **PENDING - Create after 5C completion**
+- **Note:** Will incorporate patterns from production patterns guide
 
 **Legacy Exercise (To Be Refactored):**
 
@@ -102,24 +112,42 @@
 
 ## 🗂️ File System State
 
-### Recent Changes
+### Recent Changes (January 12, 2026)
 ```
-✅ Moved: .github/workflows/exercise-04-composite-action.yml 
-          → .github/workflows/exercises/solutions/solution-04-composite-action.yml
-          (trigger changed to workflow_dispatch)
+✅ Created: documentation/production-patterns-guide.md
+           (Extracted from /reference production workflows)
 
-❌ Deleted: .github/workflows/exercise-04-composite-action.yml (from root)
+✅ Created: .github/workflows/exercises/exercise-05a-docker-build-basic.yml
+           (Replaces old single exercise with multi-exercise approach)
 
-✅ Created: .github/workflows/exercises/exercise-05-docker-build-push.yml (template)
+📂 Legacy: .github/workflows/exercises/exercise-05-docker-build-push.yml
+          (Old single-exercise version, can be removed)
 
-📂 Current: Student may copy to root for testing: 
-            .github/workflows/exercise-05-docker-build-push.yml
+📂 Reference Materials Analyzed:
+   ├── reference/workflows/*.yaml (CI/CD patterns)
+   ├── reference/charts/genomicsproduct/values.yaml (Helm structure)
+   ├── reference/compose.yaml (Docker Compose modular approach)
+   └── reference/workflows/actions/*.yaml (Custom composite actions)
 ```
 
 ### Active Files
 ```
-📝 Exercise Template (Clean):
-   .github/workflows/exercises/exercise-05-docker-build-push.yml
+📝 Current Exercise (Ready):
+   .github/workflows/exercises/exercise-05a-docker-build-basic.yml
+
+📚 Documentation (Updated):
+   documentation/
+   ├── production-patterns-guide.md (NEW - production patterns)
+   ├── current-state.md (this file - updated)
+   ├── learning-progress.md (needs update)
+   └── github-actions.md
+
+📂 Reference Materials (Read-Only):
+   reference/
+   ├── workflows/ (production CI/CD patterns)
+   ├── charts/ (Helm charts for Kubernetes)
+   ├── deploy/ (environment-specific values)
+   └── compose.*.yaml (Docker Compose modular approach)
 
 📂 Custom Action (Completed):
    .github/actions/setup-node-project/action.yml

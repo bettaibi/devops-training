@@ -1,8 +1,9 @@
 # DevOps Training - Learning Progress
 
-**Student:** s.mabrouk  
-**Last Updated:** January 7, 2026  
+**Student:** s.mabrouk
+**Last Updated:** January 12, 2026
 **Current Phase:** GitHub Actions (Phase 3)
+**Teaching Mode:** Claude Code + Production Patterns Integration
 
 ---
 
@@ -12,9 +13,11 @@
 |-------|-------|--------|------------|
 | 1 | Docker Fundamentals | ✅ Completed | 100% |
 | 2 | Docker Compose | ✅ Completed | 100% |
-| 3 | GitHub Actions | 🔄 In Progress | ~60% |
+| 3 | GitHub Actions | 🔄 In Progress | ~65% |
 | 4 | Kubernetes | ⏳ Not Started | 0% |
 | 5 | GCP Deployment | ⏳ Not Started | 0% |
+
+**New Addition:** Production Patterns Guide created from reference materials (`/reference` folder)
 
 ---
 
@@ -131,57 +134,62 @@
 
 #### Topic 5: Building and Pushing Docker Images to GHCR (IN PROGRESS)
 
-**IMPORTANT:** This topic requires 2-4 exercises for thorough learning (per updated teaching approach).
+**Teaching Approach:** Multi-exercise structure for deep learning (2-4 exercises per topic)
 
-**Current State:** Single exercise exists, needs to be expanded into multiple exercises.
+**Theory Status:** ✅ Comprehensive theory delivered (5-10 paragraphs covering Docker + GitHub Actions integration, GHCR, Buildx, caching, tagging strategies)
 
-**Recommended Structure:**
+**Exercise Structure:**
 
-**Exercise 5A: Basic Docker Build & Push (Foundation)**
+**Exercise 5A: Basic Docker Build & Push (Foundation)** ✅
 - **File:** `.github/workflows/exercises/exercise-05a-docker-build-basic.yml`
-- **Goals:** Build single service (web), push to GHCR with basic tag
-- **Concepts:** Buildx setup, GHCR authentication, basic build-push
-- **Status:** 🔄 Needs to be created
+- **Goals:** Build single service (web), push to GHCR with basic tag (branch name)
+- **Concepts:** Buildx setup, GHCR authentication, basic build-push, GitHub Actions caching
+- **Status:** ✅ **CREATED & READY** - Student can start implementation
 
-**Exercise 5B: Tagging Strategies (Reinforcement)**
+**Exercise 5B: Tagging Strategies (Reinforcement)** ⏳
 - **File:** `.github/workflows/exercises/exercise-05b-docker-build-tags.yml`
 - **Goals:** Implement multiple tagging strategies (branch, SHA, semantic)
-- **Concepts:** Metadata action, tag templates, latest tag
-- **Status:** 🔄 Needs to be created
+- **Concepts:** Metadata action, tag templates, OCI labels, tag priority
+- **Status:** ⏳ **PENDING** - Create after 5A completion and review
 
-**Exercise 5C: Multi-Service Builds (Integration)**
+**Exercise 5C: Multi-Service Builds (Integration)** ⏳
 - **File:** `.github/workflows/exercises/exercise-05c-docker-multi-service.yml`
 - **Goals:** Build all three services (web, api, core) in parallel
-- **Concepts:** Matrix or separate jobs, path filters, parallel execution
-- **Status:** 🔄 Needs to be created
+- **Concepts:** Separate parallel jobs, path filters, dependency orchestration
+- **Status:** ⏳ **PENDING** - Create after 5B completion and review
+- **Production Pattern:** Will follow pattern from `reference/workflows/reusable-deploy.yaml`
 
-**Exercise 5D: Optimized Builds (Challenge - Optional)**
-- **File:** `.github/workflows/exercises/exercise-05d-docker-optimized.yml`
-- **Goals:** Advanced caching, multi-platform builds, build optimization
-- **Concepts:** Layer caching, cache modes, build arguments, conditional builds
-- **Status:** 🔄 Needs to be created
+**Exercise 5D: Production Patterns (Challenge)** ⏳
+- **File:** `.github/workflows/exercises/exercise-05d-docker-production.yml`
+- **Goals:** Implement production patterns
+- **Concepts:** Build args for versioning, build secrets, conditional builds, reusable workflows
+- **Status:** ⏳ **PENDING** - Create after 5C completion and review
+- **Style Guide:** Will incorporate patterns from `documentation/production-patterns-guide.md`
 
-**Claude Code Action:** Break down the current single exercise into this multi-exercise structure following the new teaching approach.
+**Sequential Completion Required:** Student must complete and get approval for each exercise before moving to next.
 
-**Requirements:**
-1. Build `components/web` Docker image
-2. Push to GHCR (ghcr.io)
-3. Use semantic tagging (branch name + commit SHA)
-4. Enable GitHub Actions cache for faster builds
-5. Set proper permissions (`packages: write`)
+**Exercise 5A Requirements (Current):**
+1. Trigger on push to `test-workflows` branch
+2. Job named `build-and-push-web`
+3. Set permissions: `contents: read`, `packages: write`
+4. Steps: checkout → setup buildx → login to GHCR → build and push
+5. Tag format: `ghcr.io/<username>/devops-web:<branch-name>`
+6. Enable GitHub Actions cache (`type=gha`)
+7. Build context: `./components/web`
 
-**Next Steps After Topic 5:**
-1. Provide comprehensive theory on Docker + GitHub Actions integration
-2. Present Exercise 5A (basic)
-3. Review and provide detailed feedback
-4. Present Exercise 5B (tagging strategies)
-5. Review and provide detailed feedback
-6. Present Exercise 5C (multi-service)
-7. Review and provide detailed feedback
-8. (Optional) Present Exercise 5D (optimization challenge)
-9. Consolidate learning with summary/cheat sheet
-10. Move all solutions to `exercises/solutions/`
-11. Only then continue to Topic 6 (likely: deployment workflows)
+**Workflow for All Topic 5 Exercises:**
+1. ✅ Theory delivered (comprehensive Docker + GitHub Actions integration)
+2. ✅ Exercise 5A template created
+3. ⏳ **WAITING:** Student implements Exercise 5A
+4. ⏳ Review 5A solution, provide detailed feedback
+5. ⏳ Create and present Exercise 5B
+6. ⏳ Review 5B solution, provide detailed feedback
+7. ⏳ Create and present Exercise 5C (production patterns)
+8. ⏳ Review 5C solution, provide detailed feedback
+9. ⏳ (Optional) Create and present Exercise 5D (challenge)
+10. ⏳ Consolidate learning with summary/cheat sheet
+11. ⏳ Move all solutions to `exercises/solutions/`
+12. ⏳ **Only then** continue to Topic 6 (deployment workflows)
 
 ---
 
@@ -195,6 +203,17 @@
 5. **Artifacts:** Pass build outputs between jobs
 6. **Environment Variables:** Use job-level `env` for reusable values
 7. **Workflow Organization:** Keep templates clean, solutions in `solutions/` folder
+
+### Production Patterns Guide (NEW)
+- **File:** `documentation/production-patterns-guide.md`
+- **Source:** Extracted from production workflows in `/reference` folder
+- **Content:** Real-world patterns for:
+  - Workflow naming conventions (with emojis)
+  - Docker build patterns (parallel builds, caching strategies)
+  - Helm deployment patterns
+  - Security best practices (credential handling, secret management)
+  - Testing and quality gates (code coverage thresholds)
+  - Monitoring integration (OpenTelemetry)
 
 ### Workflow Trigger Management
 - **Active exercises:** Use `push` trigger on `test-workflows` branch

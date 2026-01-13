@@ -48,11 +48,10 @@
 # YOUR SOLUTION BELOW:
 # ====================
 
-name: Exercise 5A - Basic Docker Build
+name: Solution 5A - Basic Docker Build
 
 on:
-  push:
-    branches: [test-workflows]
+  workflow_dispatch:
 
 jobs:
   build-and-push-web:
@@ -71,17 +70,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: set lower case owner name
+      - name: Set lowercase owner name
         env:
           OWNER: "${{ github.repository_owner }}"
         run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+          echo "OWNER_LC=$(echo $OWNER | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
           context: "./components/web"
           file: "./components/web/Dockerfile"
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/devops-raining:${{ github.ref_name }}
+          tags: ghcr.io/${{ env.OWNER_LC }}/devops-training:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

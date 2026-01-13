@@ -266,6 +266,30 @@ This training uses a real microservices project with:
 
 All exercises should integrate with this actual project structure when possible.
 
+### Production Reference Materials (NEW - January 2026)
+
+**Location:** `/reference` folder
+
+**Contains:** Production workflows, Helm charts, and Docker Compose patterns from real-world projects
+
+**Style Guide:** `documentation/production-patterns-guide.md` (extracted from reference materials)
+
+**Usage:**
+- Reference production patterns when teaching advanced topics
+- Show real-world production examples
+- Incorporate production naming conventions (emojis in workflow names)
+- Follow security best practices (credential handling, secret management)
+- Use parallel build strategies for multi-service projects
+- Apply quality gates (code coverage thresholds, test reporting)
+
+**Key Patterns to Incorporate:**
+- Workflow naming with emojis (🔍 lint, 🏗️ build, 🧪 test, 📥 checkout)
+- Concurrency control (`cancel-in-progress: true`)
+- Timeout minutes on all jobs
+- Docker build patterns (separate cache images, build args vs build secrets)
+- Helm deployment workflows
+- Multi-environment configurations
+
 ### Workflow Trigger Management
 
 For GitHub Actions exercises:
@@ -347,9 +371,35 @@ jobs:
   # TODO: Your solution here
 ```
 
+### Syntax Explanation Rule (NEW - January 2026)
+
+**CRITICAL: Always explain new syntax/terms when introducing them**
+
+Whenever using new syntax, patterns, or GitHub Actions features, provide immediate explanation:
+
+**Example scenarios requiring explanation:**
+- `${{ }}` expression syntax
+- `env:` at different levels (workflow, job, step)
+- `$GITHUB_ENV` and `$GITHUB_OUTPUT` usage
+- `${VAR}` vs `$VAR` in bash
+- Context objects (`github.*`, `secrets.*`, `steps.*`)
+- Docker Buildx parameters
+- New GitHub Actions (`docker/metadata-action`, etc.)
+
+**Format:**
+```markdown
+## Syntax Used in This Exercise
+
+### `${{ github.actor }}`
+- **What:** Expression syntax accessing GitHub context
+- **Returns:** Your GitHub username
+- **When evaluated:** Before runner execution
+- **Use case:** Dynamic values in workflow configuration
+```
+
 ### When Presenting Lessons to User
 
-**CRITICAL: Theory and multiple exercises BEFORE moving forward**
+**CRITICAL: Theory, syntax explanations, and multiple exercises BEFORE moving forward**
 
 1. **Start with comprehensive theory** (in chat):
    - Deep conceptual explanation (5-10 paragraphs)
