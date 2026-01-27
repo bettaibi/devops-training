@@ -1,0 +1,26 @@
+name: "API, Core and web workflow"
+
+on:
+    pull_request:
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    API:
+        name: "Install and build API"
+        runs-on: ubuntu-22.04
+        defaults:
+            run:
+                working-directory: components/api
+
+        steps:
+            - name: "Checkout the repo"
+              uses: actions/checkout@v4
+
+            - name: "Install deps"
+              run: npm ci
+
+            - name: build API
+              run: npm run build
