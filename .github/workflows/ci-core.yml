@@ -1,0 +1,40 @@
+name: "API, Core and web workflow"
+
+on:
+    pull_request:
+        paths:
+            - components/core/**
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+env:
+    NODE_VERSION: 20
+    PACKAGE_MANAGER: "npm"
+
+jobs:
+    CORE:
+        name: "Install and build Core"
+        runs-on: ubuntu-22.04
+        timeout-minutes: 15
+        defaults:
+            run:
+                working-directory: components/core
+
+        steps:
+            - name: "Checkout the repo"
+              uses: actions/checkout@v4
+
+            - name: setup node & cache dependencies
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{env.NODE_VERSION}}
+                  cache: ${{env.PACKAGE_MANAGER}}
+                  cache-dependency-path: components/core/package-lock.json
+
+            - name: "Install deps"
+              run: npm ci
+
+            - name: build API
+              run: npm run build
