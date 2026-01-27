@@ -7,10 +7,15 @@ on:
 permissions:
     contents: read
 
+env:
+    NODE_VERSION: 20
+    PACKAGE_MANAGER: "npm"
+
 jobs:
     API:
         name: "Install and build API"
         runs-on: ubuntu-22.04
+        timeout-minutes: 15
         defaults:
             run:
                 working-directory: components/api
@@ -19,8 +24,68 @@ jobs:
             - name: "Checkout the repo"
               uses: actions/checkout@v4
 
+            - name: setup node & cache dependencies
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{env.NODE_VERSION}}
+                  cache: ${{env.PACKAGE_MANAGER}}
+                  cache-dependency-path: components/api/package-lock.json
+
             - name: "Install deps"
               run: npm ci
 
             - name: build API
+              run: npm run build
+
+    CORE:
+        name: "Install and build Core"
+        runs-on: ubuntu-22.04
+        timeout-minutes: 15
+        defaults:
+            run:
+                working-directory: components/core
+
+        steps:
+            - name: "Checkout the repo"
+              uses: actions/checkout@v4
+
+            - name: setup node & cache dependencies
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{env.NODE_VERSION}}
+                  cache: ${{env.PACKAGE_MANAGER}}
+                  cache-dependency-path: components/core/package-lock.json
+
+            - name: "Install deps"
+              run: npm ci
+
+            - name: build API
+              run: npm run build
+
+    WEB:
+        name: "lint, Install, build Web"
+        runs-on: ubuntu-22.04
+        timeout-minutes: 15
+        defaults:
+            run:
+                working-directory: components/web
+
+        steps:
+            - name: "Checkout the repo"
+              uses: actions/checkout@v4
+
+            - name: setup node & cache dependencies
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{env.NODE_VERSION}}
+                  cache: ${{env.PACKAGE_MANAGER}}
+                  cache-dependency-path: components/web/package-lock.json
+
+            - name: "Install deps"
+              run: npm ci
+
+            - name: run lint web
+              run: npm run lint
+
+            - name: build Web
               run: npm run build
